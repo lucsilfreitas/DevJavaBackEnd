@@ -1,0 +1,87 @@
+package curso.api.rest.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import curso.api.rest.model.Usuarios;
+import curso.api.rest.repository.UsuariosRepository;
+
+@RestController// define a arquitetura restfull
+@RequestMapping(value = "/usuario")
+public class IndexController {
+	
+	@Autowired
+	private UsuariosRepository usuariosRepository;
+	
+	
+	/*Servico RestFull*/
+	//consutar por registro
+	@GetMapping(value = "/{id}", produces = "application/json")
+	public ResponseEntity<Usuarios> init(@PathVariable (value = "id") Long id) {
+		
+		Optional<Usuarios> usuario = usuariosRepository.findById(id);
+
+		return new ResponseEntity<Usuarios>(usuario.get(), HttpStatus.OK);
+	}
+	
+	//consultar todos os registros
+	@GetMapping(value = "/", produces = "application/json" )
+	public ResponseEntity<List<Usuarios>> usuario(){
+		List<Usuarios> list =  (List<Usuarios>) usuariosRepository.findAll();
+		return new ResponseEntity<List<Usuarios>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/relatoriopdf/{id}", produces = "application/json")
+	public ResponseEntity<Usuarios> relatorio(@PathVariable (value = "id") Long id) {
+		
+		Optional<Usuarios> usuario = usuariosRepository.findById(id);
+
+		//retorno seria um relatorio
+		return new ResponseEntity<Usuarios>(usuario.get(), HttpStatus.OK);
+	}
+	
+	//salvar
+	@PostMapping(value = "/", produces = "application/json")
+	public ResponseEntity<Usuarios> cadastrar(@RequestBody Usuarios usuario){
+		Usuarios usuarioSalvar = usuariosRepository.save(usuario);
+		return new ResponseEntity<Usuarios>(usuarioSalvar, HttpStatus.OK);
+	}
+	
+	//editar importante collocar o Id no json
+	@PutMapping(value = "/", produces = "application/json")
+	public ResponseEntity<Usuarios> atualizar(@RequestBody Usuarios usuario){
+		
+		//para adicionar o id no telefone realcionamento
+		
+		for (int pos = 0; < usuario.getTelefone().size(); pos ++) {
+			
+		}
+		
+		Usuarios usuarioSalvar = usuariosRepository.save(usuario);
+		return new ResponseEntity<Usuarios>(usuarioSalvar, HttpStatus.OK);
+	}
+	
+	//delete
+	@DeleteMapping(value = "/{id}", produces = "application/text")
+	public String delete(@PathVariable("id") Long id) {
+		
+		usuariosRepository.deleteById(id);
+
+	
+		return "Excluido cm sucesso!!";
+	}
+	
+	
+}

@@ -1,0 +1,11 @@
+package curso.api.rest.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+
+@Entity
+public class Telefones implements Serializable {
+
+	
+}

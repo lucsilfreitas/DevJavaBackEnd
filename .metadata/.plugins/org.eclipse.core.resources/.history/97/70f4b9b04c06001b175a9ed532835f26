@@ -1,0 +1,21 @@
+package curso.api.rest.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController// define a arquitetura restfull
+@RequestMapping(value = "/usuario")
+public class IndexController {
+	/*Servico RestFull*/
+	@GetMapping(value = "/", produces = "application/json")
+	public ResponseEntity init(@RequestParam(value = "nome") String nome) {
+		System.out.println("paramentro" + nome);
+		return new ResponseEntity("Ola REST Usuario" + nome, HttpStatus.OK);
+	}
+		
+	
+}
