@@ -13,22 +13,3 @@ spring.jpa.properties.hibernate.type=trace
 logging.level.web=TRACE
 logging.level.org.springframework.web=TRACE
 server.servelet.context-path=/cursospringrestapi
-
-#Hiraki
-
-#numero maximo de milssegundos que um cliente aguradara por uma conexao
-spring.datasource.hikari.connection-timeout= 20000
-
-#numero maximo de conexoes inativas
-spring.datasource.hikari.minimum-idle= 10
-
-#tempo ocioso
-spring.datasource.hikari.idle-timeout= 10000
-
-#numero maximo de user conectados
-spring.datasource.hikari.maximum-pool-size= 40
-
-#commit banco de dados
-spring.datasource.hikari.auto-commit=true
-
-

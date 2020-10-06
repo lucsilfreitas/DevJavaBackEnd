@@ -78,19 +78,6 @@
 			<version>0.7.0</version>
 		</dependency>
 		
-		<!-- Hikari -->
-		<dependency> 
-		<groupId>com.zaxxer</groupId>
-		<artifactId>HikariCP</artifactId>
-		<version>3.3.1</version>	
-		</dependency>	
-		
-			<!-- Cache -->
-		<dependency> 
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-cache</artifactId>
-
-		</dependency>
 		
 	</dependencies>
 

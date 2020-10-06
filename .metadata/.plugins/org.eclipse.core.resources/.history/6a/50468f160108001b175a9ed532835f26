@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +29,6 @@ public class IndexController {
 	/*Servico RestFull*/
 	//consutar por registro
 	@GetMapping(value = "/{id}", produces = "application/json")
-	@Cacheable("cacheruser")
 	public ResponseEntity<Usuarios> init(@PathVariable (value = "id") Long id) {
 		
 		Optional<Usuarios> usuario = usuariosRepository.findById(id);
@@ -41,12 +38,8 @@ public class IndexController {
 	
 	//consultar todos os registros
 	@GetMapping(value = "/", produces = "application/json" )
-	@Cacheable("cacheusuarios")
-	public ResponseEntity<List<Usuarios>> usuario() throws InterruptedException{
+	public ResponseEntity<List<Usuarios>> usuario(){
 		List<Usuarios> list =  (List<Usuarios>) usuariosRepository.findAll();
-		
-		Thread.sleep(6000);
-		
 		return new ResponseEntity<List<Usuarios>>(list, HttpStatus.OK);
 	}
 	
@@ -68,7 +61,8 @@ public class IndexController {
 				for (int pos = 0; pos < usuario.getTelefone().size(); pos ++) {
 					usuario.getTelefone().get(pos).setUsuario(usuario);
 				}
-				
+		
+		
 		Usuarios usuarioSalvar = usuariosRepository.save(usuario);
 		return new ResponseEntity<Usuarios>(usuarioSalvar, HttpStatus.OK);
 	}
@@ -81,13 +75,6 @@ public class IndexController {
 		
 		for (int pos = 0; pos < usuario.getTelefone().size(); pos ++) {
 			usuario.getTelefone().get(pos).setUsuario(usuario);
-		}
-		
-		Usuarios userTemporario = usuariosRepository.findUserByLogin(usuario.getLogin());
-		
-		if (!userTemporario.getSenha().equals(usuario.getSenha())) { //senhas diferentes
-			String senhacriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
-			usuario.setSenha(senhacriptografada);
 		}
 				
 		Usuarios usuarioSalvar = usuariosRepository.save(usuario);
