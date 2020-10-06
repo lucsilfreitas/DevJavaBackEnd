@@ -1,0 +1,28 @@
+package curso.api.rest.security;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+@Service
+@Component
+public class JWTTokenAutenticacaoService {
+
+	//TEMPO DE EXPIRAÇÃO DO  2 DIAS TOKEN
+	private static final long EXPIRATION_TIME = 172800000;	
+	
+	//senha unica para compor a autenticacao
+	private static final String SECRET = "SenhaExtremamenteSecreta";
+	
+	//prefixo padrao de token
+	private static final String TOKEN_PREFIX = "Bearer";
+	
+	
+	private static final String HEADER_STRING = "Authorization";
+	
+	//Gernado Token de autenticação a adicionando cabeçalho e resposta
+	public void addAuthentication(HttpServletResponse response, String username) {
+		
+	}
+}
